@@ -1,0 +1,10 @@
+* text=auto eol=lf
+netlify.toml text eol=lf
+_redirects text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.png binary
+*.svg binary
