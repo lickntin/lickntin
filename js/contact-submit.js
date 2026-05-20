@@ -3,35 +3,44 @@
   if (!form) return;
 
   var cfg = window.SUPABASE_CONFIG || {};
-  var done = form.parentElement && form.parentElement.querySelector('.w-form-done');
-  var fail = form.parentElement && form.parentElement.querySelector('.w-form-fail');
+  var statusEl = document.getElementById('contact-form-status');
   var submitBtn = form.querySelector('.contact-submit-btn');
   var defaultBtnText = submitBtn ? submitBtn.textContent : '문의 보내기';
 
-  function show(el, visible) {
-    if (!el) return;
-    el.style.display = visible ? 'block' : 'none';
+  var MSG_OK = '문의가 접수되었습니다. 내용 확인 후 순차적으로 연락드리겠습니다.';
+  var MSG_FAIL = '접수 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.';
+
+  function setStatus(type, text) {
+    if (!statusEl) return;
+    statusEl.hidden = false;
+    statusEl.classList.add('is-visible');
+    statusEl.classList.remove('is-success', 'is-error');
+    if (type === 'success') statusEl.classList.add('is-success');
+    if (type === 'error') statusEl.classList.add('is-error');
+    statusEl.textContent = text;
   }
 
-  function hideMessages() {
-    show(done, false);
-    show(fail, false);
+  function clearStatus() {
+    if (!statusEl) return;
+    statusEl.hidden = true;
+    statusEl.classList.remove('is-visible', 'is-success', 'is-error');
+    statusEl.textContent = '';
   }
 
-  hideMessages();
+  clearStatus();
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    hideMessages();
+    clearStatus();
 
     if (!cfg.url || !cfg.anonKey) {
       console.error('Supabase config missing. Set SUPABASE_URL and SUPABASE_ANON_KEY on Netlify.');
-      show(fail, true);
+      setStatus('error', MSG_FAIL);
       return;
     }
 
     if (typeof window.supabase === 'undefined') {
-      show(fail, true);
+      setStatus('error', MSG_FAIL);
       return;
     }
 
@@ -44,7 +53,7 @@
 
     var phoneDigits = phone.replace(/[^0-9]/g, '');
     if (phoneDigits.length < 9) {
-      show(fail, true);
+      setStatus('error', MSG_FAIL);
       return;
     }
 
@@ -75,11 +84,11 @@
 
     if (result.error) {
       console.error('Inquiry insert failed:', result.error.message, result.error);
-      show(fail, true);
+      setStatus('error', MSG_FAIL);
       return;
     }
 
     form.reset();
-    show(done, true);
+    setStatus('success', MSG_OK);
   });
 })();

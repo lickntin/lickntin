@@ -318,6 +318,27 @@
   opacity: 0.65;
   cursor: wait;
 }
+.form-block-contact .contact-form-status {
+  display: none;
+  width: 100%;
+  margin-top: var(--spacing--12);
+  padding: var(--spacing--12) var(--spacing--16);
+  border-radius: var(--_🔘-radius---general--small);
+  text-align: center;
+  line-height: 1.5;
+}
+.form-block-contact .contact-form-status.is-visible {
+  display: block;
+}
+.form-block-contact .contact-form-status.is-success {
+  border: 1px solid var(--_🎨-color--base---ui--success);
+  background-color: var(--_🎨-color--base---ui--success);
+  color: var(--_🎨-color--base---neutral--dark-100);
+}
+.form-block-contact .contact-form-status.is-error {
+  background-color: var(--_🎨-color--base---ui--error);
+  color: var(--_🎨-color--base---neutral--light-100);
+}
 .popup-contact .form-price-wrap .radio-button-field.w-radio {
   padding-left: 0 !important;
 }
@@ -563,14 +584,9 @@
             <div class="contact-submit-wrap">
               <button type="submit" class="contact-submit-btn" data-wait="전송 중...">문의 보내기</button>
             </div>
+            <div id="contact-form-status" class="contact-form-status" role="status" aria-live="polite" hidden></div>
           </div>
         </form>
-        <div class="success-message w-form-done">
-          <div>문의가 접수되었습니다. 내용 확인 후 순차적으로 연락드리겠습니다.</div>
-        </div>
-        <div class="error-message w-form-fail">
-          <div>접수 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.</div>
-        </div>
       </div>
     </div>
     <div class="master-bg-grid">

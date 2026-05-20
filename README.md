@@ -1,22 +1,33 @@
-﻿# lickntin.com — Netlify 배포용
+﻿# lickntin.com
 
-릭엔틴 정적 사이트. Netlify·GitHub 연동 전용 폴더입니다.
+릭엔틴 사이트 · Netlify · Supabase 문의
 
-- **도메인:** https://lickntin.com
-- **저장소:** https://github.com/lickntin/lickntin.git
+## Supabase (처음이거나 SQL을 비웠을 때)
 
-## Netlify 설정
+1. GitHub에서 **`supabase/setup.sql`** 내용 복사
+2. Supabase **SQL Editor** → **New query** → 붙여넣기 → **Run** (파일은 이것만)
+3. **Authentication**에 관리자 이메일 계정 생성
+4. SQL Editor **새 쿼리**에서 관리자 연결:
+
+```sql
+insert into public.admin_users (user_id, email)
+select id, email from auth.users
+where email = 'dhp168342@naver.com'
+on conflict (user_id) do nothing;
+```
+
+Table Editor에 `inquiries`, `admin_users`가 보이면 OK.
+
+## Netlify
 
 | 항목 | 값 |
 |------|-----|
 | Build command | `node scripts/write-config.js` |
 | Publish directory | `.` |
-| Custom domain | `lickntin.com`, `www.lickntin.com` |
 
-**Supabase 연동:** `SUPABASE_URL`, `SUPABASE_ANON_KEY` 환경 변수 필요 → [NETLIFY_SETUP.md](./NETLIFY_SETUP.md), [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)
+환경 변수: `SUPABASE_URL`, `SUPABASE_ANON_KEY` → 저장 후 **Trigger deploy**
 
-DNS는 Netlify 안내에 따라 도메인 등록업체에서 설정하세요.
+## URL
 
-## 포함 파일
-
-`index.html`, `privacy-policy.html`, `css/`, `js/`, `images/`, `netlify.toml`, `_redirects`
+- https://lickntin.com
+- https://lickntin.com/admin/

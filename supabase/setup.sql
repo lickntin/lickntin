@@ -1,4 +1,9 @@
--- 릭엔틴 문의 접수 + 관리자 (Supabase SQL Editor에서 실행)
+-- 릭엔틴 Supabase — SQL Editor에서 이 파일만 실행하세요.
+-- (쿼리 탭이 여러 개여도 내용은 이 파일 하나만 쓰면 됩니다.)
+
+-- DB까지 완전 초기화할 때만 주석 해제 후 Run → 그다음 아래 전체 다시 Run
+-- drop table if exists public.inquiries cascade;
+-- drop table if exists public.admin_users cascade;
 
 create table if not exists public.inquiries (
   id uuid primary key default gen_random_uuid(),
@@ -14,15 +19,15 @@ create table if not exists public.inquiries (
   privacy_agreed boolean not null default true
 );
 
+alter table public.inquiries
+  add column if not exists phone text;
+
 create index if not exists inquiries_created_at_idx
   on public.inquiries (created_at desc);
 
 create index if not exists inquiries_status_idx
   on public.inquiries (status);
 
-comment on table public.inquiries is '홈페이지 문의 폼 접수';
-
--- 관리자 계정 연결 (Supabase Auth 사용자 UUID)
 create table if not exists public.admin_users (
   user_id uuid primary key references auth.users (id) on delete cascade,
   email text not null unique,
@@ -36,13 +41,11 @@ grant usage on schema public to anon, authenticated;
 grant insert on table public.inquiries to anon;
 grant select, update on table public.inquiries to authenticated;
 
--- 정책 재실행 시 오류 방지 (이미 있으면 삭제 후 생성)
 drop policy if exists "anon_insert_inquiries" on public.inquiries;
 drop policy if exists "admin_select_inquiries" on public.inquiries;
 drop policy if exists "admin_update_inquiries" on public.inquiries;
 drop policy if exists "admin_users_no_api" on public.admin_users;
 
--- 방문자(anon): 문의 INSERT만 가능, 조회 불가
 create policy "anon_insert_inquiries"
   on public.inquiries
   for insert
@@ -50,49 +53,40 @@ create policy "anon_insert_inquiries"
   with check (
     char_length(trim(name)) between 1 and 200
     and email ~* '^[^@]+@[^@]+\.[^@]+$'
-    and char_length(regexp_replace(trim(phone), '[^0-9]', '', 'g')) >= 9
+    and char_length(regexp_replace(coalesce(phone, ''), '[^0-9]', '', 'g')) >= 9
     and char_length(trim(project_type)) between 1 and 200
     and privacy_agreed is true
     and coalesce(status, 'new') = 'new'
   );
 
--- 등록된 관리자: 문의 조회
 create policy "admin_select_inquiries"
   on public.inquiries
   for select
   to authenticated
   using (
-    exists (
-      select 1
-      from public.admin_users au
-      where au.user_id = auth.uid()
-    )
+    exists (select 1 from public.admin_users au where au.user_id = auth.uid())
   );
 
--- 등록된 관리자: 상태 변경
 create policy "admin_update_inquiries"
   on public.inquiries
   for update
   to authenticated
   using (
-    exists (
-      select 1
-      from public.admin_users au
-      where au.user_id = auth.uid()
-    )
+    exists (select 1 from public.admin_users au where au.user_id = auth.uid())
   )
   with check (
-    exists (
-      select 1
-      from public.admin_users au
-      where au.user_id = auth.uid()
-    )
+    exists (select 1 from public.admin_users au where au.user_id = auth.uid())
   );
 
--- admin_users: 클라이언트에서 직접 수정 불가 (SQL로만 등록)
 create policy "admin_users_no_api"
   on public.admin_users
   for all
   to anon, authenticated
   using (false)
   with check (false);
+
+-- 관리자 연결 (Authentication에 계정 만든 뒤, 이메일만 본인 것으로 수정)
+-- insert into public.admin_users (user_id, email)
+-- select id, email from auth.users
+-- where email = 'dhp168342@naver.com'
+-- on conflict (user_id) do nothing;
