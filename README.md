@@ -9,9 +9,11 @@
 
 | 항목 | 값 |
 |------|-----|
-| Build command | *(비움)* |
+| Build command | `node scripts/write-config.js` |
 | Publish directory | `.` |
 | Custom domain | `lickntin.com`, `www.lickntin.com` |
+
+**Supabase 연동:** `SUPABASE_URL`, `SUPABASE_ANON_KEY` 환경 변수 필요 → [NETLIFY_SETUP.md](./NETLIFY_SETUP.md), [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)
 
 DNS는 Netlify 안내에 따라 도메인 등록업체에서 설정하세요.
 

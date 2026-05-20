@@ -7,26 +7,33 @@
    - **Project URL** → `SUPABASE_URL`
    - **anon public** key → `SUPABASE_ANON_KEY`
 
-## 2. DB 테이블·보안 (SQL)
+## 2. DB 테이블·보안 (SQL) — **반드시 먼저**
 
-**SQL Editor** → New query → `supabase/migrations/001_inquiries.sql` 내용 전체 붙여넣기 → **Run**
+`admin_users` INSERT 전에 **테이블 생성 SQL**을 먼저 실행해야 합니다.  
+안 하면 `relation "public.admin_users" does not exist` 오류가 납니다.
+
+**SQL Editor** → New query → 아래 파일 **전체** 붙여넣기 → **Run**:
+
+`supabase/migrations/001_inquiries.sql`
+
+성공 후 **Table Editor**에 `inquiries`, `admin_users` 두 테이블이 보이면 OK.
 
 ## 3. 관리자 계정 만들기
 
-1. **Authentication → Users → Add user → Create new user**
-   - 이메일: 관리자용 (예: `admin@yourdomain.com`)
-   - 비밀번호: 강한 비밀번호 설정
-   - **Auto Confirm User** 체크
+1. **Authentication → Users**에서 사용자가 이미 있으면 그대로 사용  
+   (없으면 Add user → 이메일·비밀번호 → **Auto Confirm User** 체크)
 
-2. **SQL Editor**에서 (이메일을 본인 것으로 변경):
+2. **테이블 생성(2번)을 끝낸 뒤**, SQL Editor에서 **새 쿼리**로 실행:
 
 ```sql
 insert into public.admin_users (user_id, email)
 select id, email
 from auth.users
-where email = 'admin@yourdomain.com'
+where email = 'dhp168342@naver.com'
 on conflict (user_id) do nothing;
 ```
+
+이메일은 Authentication에 등록한 주소와 **완전히 동일**하게 넣으세요.
 
 ## 4. Netlify 환경 변수
 
