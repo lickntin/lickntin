@@ -18,7 +18,15 @@
 | Build command | `node scripts/write-config.js` |
 | Publish directory | `.` |
 
-환경 변수: `SUPABASE_URL`, `SUPABASE_ANON_KEY` → 저장 후 **Trigger deploy**
+환경 변수 (필수):
+
+| 이름 | 어디서 복사 |
+|------|-------------|
+| `SUPABASE_URL` | Supabase → Settings → API → Project URL |
+| `SUPABASE_ANON_KEY` | anon public 키 |
+| `SUPABASE_SERVICE_ROLE_KEY` | **service_role** secret 키 (문의 저장용, 절대 공개 금지) |
+
+저장 후 **Trigger deploy** (Functions 포함 배포)
 
 ## URL
 

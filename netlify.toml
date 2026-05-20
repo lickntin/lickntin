@@ -1,10 +1,10 @@
-[build]
+﻿[build]
   command = "node scripts/write-config.js"
   publish = "."
 
 [build.environment]
   # Supabase anon key is public by design (RLS protects data). Netlify must allow it in built JS.
-  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,SUPABASE_ANON_KEY"
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY"
 
 [[headers]]
   for = "/*"
