@@ -32,6 +32,12 @@ create table if not exists public.admin_users (
 alter table public.inquiries enable row level security;
 alter table public.admin_users enable row level security;
 
+-- 정책 재실행 시 오류 방지 (이미 있으면 삭제 후 생성)
+drop policy if exists "anon_insert_inquiries" on public.inquiries;
+drop policy if exists "admin_select_inquiries" on public.inquiries;
+drop policy if exists "admin_update_inquiries" on public.inquiries;
+drop policy if exists "admin_users_no_api" on public.admin_users;
+
 -- 방문자(anon): 문의 INSERT만 가능, 조회 불가
 create policy "anon_insert_inquiries"
   on public.inquiries
