@@ -48,7 +48,7 @@
   function renderTable(list) {
     if (!tableBody) return;
     if (!list.length) {
-      tableBody.innerHTML = '<tr><td colspan="6">문의가 없습니다.</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="7">문의가 없습니다.</td></tr>';
       return;
     }
     tableBody.innerHTML = list
@@ -62,6 +62,9 @@
           '</td>' +
           '<td>' +
           escapeHtml(r.name) +
+          '</td>' +
+          '<td>' +
+          escapeHtml(r.phone || '-') +
           '</td>' +
           '<td>' +
           escapeHtml(r.email) +
@@ -105,6 +108,8 @@
     detailPanel.innerHTML =
       '<p><strong>이름</strong> ' +
       escapeHtml(r.name) +
+      ' · <strong>휴대폰</strong> ' +
+      escapeHtml(r.phone || '-') +
       ' · <strong>이메일</strong> ' +
       escapeHtml(r.email) +
       '</p>' +
@@ -157,7 +162,7 @@
     var res = await q;
     if (res.error) {
       tableBody.innerHTML =
-        '<tr><td colspan="6">불러오기 실패: ' + escapeHtml(res.error.message) + '</td></tr>';
+        '<tr><td colspan="7">불러오기 실패: ' + escapeHtml(res.error.message) + '</td></tr>';
       return;
     }
     rows = res.data || [];

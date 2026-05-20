@@ -5,6 +5,7 @@ create table if not exists public.inquiries (
   created_at timestamptz not null default timezone('utc', now()),
   name text not null,
   email text not null,
+  phone text not null,
   project_type text not null,
   message text,
   package_budget text,
@@ -39,6 +40,7 @@ create policy "anon_insert_inquiries"
   with check (
     char_length(trim(name)) between 1 and 200
     and email ~* '^[^@]+@[^@]+\.[^@]+$'
+    and char_length(regexp_replace(trim(phone), '[^0-9]', '', 'g')) >= 9
     and char_length(trim(project_type)) between 1 and 200
     and privacy_agreed is true
     and status = 'new'
