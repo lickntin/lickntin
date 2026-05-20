@@ -3,44 +3,53 @@
   if (!form) return;
 
   var cfg = window.SUPABASE_CONFIG || {};
-  var statusEl = document.getElementById('contact-form-status');
-  var submitBtn = form.querySelector('.contact-submit-btn');
-  var defaultBtnText = submitBtn ? submitBtn.textContent : '문의 보내기';
+  var wrap = form.closest('.form-block-contact') || form.parentElement;
+  var done = wrap && wrap.querySelector('.w-form-done');
+  var fail = wrap && wrap.querySelector('.w-form-fail');
+  var privacyInput = document.getElementById('I-agree-to-Privacy-Policy');
+  var submitInput = form.querySelector('input[type="submit"]');
+  var submitVisual = form.querySelector('.contact-form-submit-visual');
 
-  var MSG_OK = '문의가 접수되었습니다. 내용 확인 후 순차적으로 연락드리겠습니다.';
-  var MSG_FAIL = '접수 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.';
-
-  function setStatus(type, text) {
-    if (!statusEl) return;
-    statusEl.hidden = false;
-    statusEl.classList.add('is-visible');
-    statusEl.classList.remove('is-success', 'is-error');
-    if (type === 'success') statusEl.classList.add('is-success');
-    if (type === 'error') statusEl.classList.add('is-error');
-    statusEl.textContent = text;
+  function show(el, visible) {
+    if (!el) return;
+    el.style.display = visible ? 'block' : 'none';
   }
 
-  function clearStatus() {
-    if (!statusEl) return;
-    statusEl.hidden = true;
-    statusEl.classList.remove('is-visible', 'is-success', 'is-error');
-    statusEl.textContent = '';
+  function hideMessages() {
+    show(done, false);
+    show(fail, false);
   }
 
-  clearStatus();
+  hideMessages();
+
+  if (submitVisual) {
+    submitVisual.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (typeof form.requestSubmit === 'function') {
+        form.requestSubmit();
+      } else {
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      }
+    });
+  }
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    clearStatus();
+    hideMessages();
 
     if (!cfg.url || !cfg.anonKey) {
       console.error('Supabase config missing. Set SUPABASE_URL and SUPABASE_ANON_KEY on Netlify.');
-      setStatus('error', MSG_FAIL);
+      show(fail, true);
       return;
     }
 
     if (typeof window.supabase === 'undefined') {
-      setStatus('error', MSG_FAIL);
+      show(fail, true);
+      return;
+    }
+
+    if (!privacyInput || !privacyInput.checked) {
+      show(fail, true);
       return;
     }
 
@@ -52,15 +61,16 @@
     var pkgInput = form.querySelector('input[name="selected-package"]:checked');
 
     var phoneDigits = phone.replace(/[^0-9]/g, '');
-    if (phoneDigits.length < 9) {
-      setStatus('error', MSG_FAIL);
+    if (phoneDigits.length < 9 || !projectType) {
+      show(fail, true);
       return;
     }
 
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = submitBtn.getAttribute('data-wait') || '전송 중...';
+    if (submitInput) {
+      submitInput.disabled = true;
+      submitInput.value = '전송 중...';
     }
+    if (submitVisual) submitVisual.style.pointerEvents = 'none';
 
     var client = window.supabase.createClient(cfg.url, cfg.anonKey);
 
@@ -77,18 +87,19 @@
 
     var result = await client.from('inquiries').insert(row);
 
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = defaultBtnText;
+    if (submitInput) {
+      submitInput.disabled = false;
+      submitInput.value = '문의 접수';
     }
+    if (submitVisual) submitVisual.style.pointerEvents = '';
 
     if (result.error) {
       console.error('Inquiry insert failed:', result.error.message, result.error);
-      setStatus('error', MSG_FAIL);
+      show(fail, true);
       return;
     }
 
     form.reset();
-    setStatus('success', MSG_OK);
+    show(done, true);
   });
 })();
