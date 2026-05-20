@@ -86,6 +86,16 @@
 
         if (result.error) {
           console.error('Inquiry insert failed:', result.error.message, result.error);
+          var failMsg = fail && fail.querySelector('div');
+          if (failMsg) {
+            if (result.error.message && result.error.message.indexOf('row-level security') !== -1) {
+              failMsg.textContent =
+                'DB 권한 설정이 필요합니다. Supabase SQL Editor에서 fix_insert_now.sql 을 실행해 주세요.';
+            } else {
+              failMsg.textContent =
+                '접수 중 문제가 발생했습니다. (' + result.error.message + ')';
+            }
+          }
           show(fail, true);
           return;
         }
