@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html data-wf-page="6a0dc2639c9e6f54ae2d477d" data-wf-site="6a0dc2609c9e6f54ae2d4709" lang="ko">
 <head>
   <meta charset="utf-8">
@@ -18,7 +18,8 @@
   <link href="css/normalize.css" rel="stylesheet" type="text/css">
   <link href="css/base-components.css" rel="stylesheet" type="text/css">
   <link href="css/styles.css" rel="stylesheet" type="text/css">
-  <style>html.w-mod-js:not(.w-mod-ix3) :is([heading-animation] > *, .nav-link [text], .icon-wrap-mode > *, .footer-link, .hero-avatar > *, .hero-text-wrap, .hero-section .marquee-text) {visibility: hidden !important;}</style>
+  <style>html.w-mod-js:not(.w-mod-ix3) :is([heading-animation] > *, .nav-link [text], .icon-wrap-mode > *, .footer-link) {visibility: hidden !important;}</style>
+  <style>html.w-mod-js:not(.w-mod-ix3) .hero-avatar, html.w-mod-js:not(.w-mod-ix3) .hero-text-wrap, html.w-mod-js:not(.w-mod-ix3) .hero-section .marquee-text {visibility: visible !important;}</style>
   <style>
 .section.hero-section {
   overflow: visible;
@@ -1832,6 +1833,25 @@ $("[data-lenis-toggle]").on("click", function () {
     var open = panel.classList.toggle("is-open");
     btn.setAttribute("aria-expanded", open ? "true" : "false");
   });
+})();
+
+(function () {
+  function revealStuckContent() {
+    var root = document.documentElement;
+    if (!root.classList.contains("w-mod-ix3")) {
+      root.classList.add("w-mod-ix3");
+    }
+    document.querySelectorAll('[style*="opacity:0"], [style*="opacity: 0"]').forEach(function (el) {
+      el.style.opacity = "1";
+      el.style.filter = "none";
+    });
+    var marquee = document.querySelector(".hero-section .marquee");
+    if (marquee) marquee.style.opacity = "1";
+  }
+  window.addEventListener("load", function () {
+    setTimeout(revealStuckContent, 1200);
+  });
+  setTimeout(revealStuckContent, 3500);
 })();
   </script>
 </body>
