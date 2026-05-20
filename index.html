@@ -342,8 +342,48 @@
   width: 100%;
   margin-top: var(--spacing--12);
 }
+.form-block-contact .contact-form-submit-wrap {
+  width: 100%;
+}
+.form-block-contact .contact-form-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 10rem;
+  padding: 0.875rem 1.75rem;
+  border: none;
+  border-radius: var(--_🔘-radius---general--small);
+  background-color: var(--_🎨-color--base---accent--primary);
+  color: #fff !important;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--_🎨-color--base---accent--primary) 35%, transparent);
+}
+.form-block-contact .contact-form-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
 .form-block-contact .label-large {
-  color: var(--_🎨-color--base---neutral--dark-64);
+  color: #5c5c5c !important;
+}
+/* 팝업은 흰 배경 — .form 다크 테마 글자색 덮어쓰기 */
+.form-block-contact .form {
+  --_🎨-color--tokens---text-body--strong: #1a1a1a;
+  --_🎨-color--tokens---text-body--medium: #5c5c5c;
+  --_🎨-color--tokens---text-label--medium: #5c5c5c;
+  color: #1a1a1a;
+}
+.form-block-contact .privacy-consent-text {
+  color: #1a1a1a !important;
+}
+.form-block-contact .privacy-required {
+  color: #5c5c5c !important;
+}
+.form-block-contact .text-field,
+.form-block-contact .text-field.select,
+.form-block-contact textarea.text-field {
+  color: #1a1a1a !important;
 }
 .popup-contact .form-price-wrap .budget-pill {
   position: relative;
@@ -372,11 +412,18 @@
   font-size: 0.8125rem;
   line-height: 1.35;
   white-space: nowrap;
-  color: var(--_🎨-color--tokens---text-body--strong);
+  color: #1a1a1a !important;
+  font-weight: 500;
 }
 .popup-contact .form-price-wrap .budget-pill:has(input:checked) {
   border-color: var(--_🎨-color--base---accent--primary);
-  background-color: color-mix(in srgb, var(--_🎨-color--base---accent--primary) 14%, #fff);
+  background-color: color-mix(in srgb, var(--_🎨-color--base---accent--primary) 18%, #fff);
+}
+.popup-contact .form-price-wrap .budget-pill:has(input:checked) span {
+  color: #1a1a1a !important;
+}
+.form-block-contact .form-budget-label {
+  color: #5c5c5c !important;
 }
 .footer-bottom-tile {
   flex-wrap: wrap;
@@ -520,7 +567,7 @@
       </div>
     </div>
     <div class="popup-contact">
-      <div class="form-block-contact w-form">
+      <div class="form-block-contact">
         <div data-w-id="d8152ea2-43c9-1948-a2fa-f6dbf789637f" class="popup-close-button">
           <div class="icon-menu w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 12 12" fill="none">
               <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -586,14 +633,8 @@
                 <p><strong>보호책임자</strong> 박동현 · 010-7632-1683 · dhp168342@naver.com</p>
               </div>
             </div>
-            <div class="submit-wrap">
-              <input type="submit" data-wait="전송 중..." class="submit-absolute w-button" value="문의 접수" tabindex="-1" aria-hidden="true">
-              <a href="#" data-wf--cta-primary--variant="primary" class="cta-main w-inline-block contact-form-submit-visual">
-                <div class="button-text-mask">
-                  <div button-text="" class="button-text">상담 문의</div>
-                </div>
-                <div button-bg="" class="button-bg"></div>
-              </a>
+            <div class="submit-wrap contact-form-submit-wrap">
+              <button type="submit" class="contact-form-submit-btn w-button" data-wait="전송 중...">상담 문의</button>
             </div>
           </div>
         </form>
