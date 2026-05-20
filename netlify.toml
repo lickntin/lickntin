@@ -1,34 +1,36 @@
-﻿[build]
-  command = "node scripts/write-config.js"
-  publish = "."
+[build]
+command = "node scripts/write-config.js"
+publish = "."
 
 [build.environment]
-  # Supabase anon key is public by design (RLS protects data). Netlify must allow it in built JS.
-  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY"
+SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY"
 
 [[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
 
 [[headers]]
-  for = "/css/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+for = "/css/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/js/contact-submit.js"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+for = "/js/contact-submit.js"
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/js/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+for = "/js/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/images/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+for = "/images/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[functions]
+directory = "netlify/functions"
