@@ -72,6 +72,13 @@ SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 ## 5. 빌드 오류 시
 
+### Secrets scanning / `SUPABASE_ANON_KEY` 차단
+
+Netlify가 빌드 결과물의 anon 키를 “비밀”로 막으면 실패합니다.  
+Supabase **anon(public) 키는 브라우저에 노출되는 것이 정상**이며, `netlify.toml`에 `SECRETS_SCAN_OMIT_KEYS`가 이미 설정되어 있습니다.
+
+재배포만 하면 됩니다. **service_role** 키는 절대 빌드·저장소에 넣지 마세요.
+
 ### `netlify.toml` 파싱 실패
 
 - 파일이 UTF-16이면 실패합니다. 저장소의 최신 `main` 을 pull 후 재배포하세요.
