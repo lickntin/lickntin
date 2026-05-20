@@ -280,15 +280,6 @@
   text-align: center;
   color: var(--_🎨-color--tokens---text-body--medium);
 }
-.form-block-contact .form-legal-note {
-  margin: 0;
-  color: var(--_🎨-color--tokens---text-body--medium);
-  line-height: 1.5;
-}
-.form-block-contact .form-legal-note a {
-  color: var(--_🎨-color--base---accent--primary);
-  text-decoration: underline;
-}
 .form-block-contact .contact-submit-wrap {
   width: 100%;
 }
@@ -339,38 +330,38 @@
   background-color: var(--_🎨-color--base---ui--error);
   color: var(--_🎨-color--base---neutral--light-100);
 }
-.popup-contact .form-price-wrap .radio-button-field.w-radio {
-  padding-left: 0 !important;
-}
-.popup-contact .form-price-wrap .radio-button-field .w-radio-input {
-  float: none !important;
-  margin: 0 !important;
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 0 !important;
-  border-radius: var(--_🔘-radius---general--small) !important;
-  box-shadow: none !important;
-}
-.popup-contact .form-price-wrap .radio-button-field .w-radio-input.w-form-formradioinput--inputType-custom {
-  border-radius: var(--_🔘-radius---general--full) !important;
-}
-.popup-contact .form-price-wrap .radio-button-field .w-radio-input.w--redirected-checked {
-  border-width: 1px !important;
-  border-color: var(--_🎨-color--base---neutral--dark-32) !important;
-  background-color: color-mix(in srgb, var(--_🎨-color--base---accent--primary) 12%, #fff) !important;
-  box-shadow: none !important;
-}
-.popup-contact .form-price-wrap .radio-button-field .w-radio-input::before,
-.popup-contact .form-price-wrap .radio-button-field .w-radio-input::after {
-  display: none !important;
-}
-.popup-contact .form-price-wrap .radio-button-field {
+.popup-contact .form-price-wrap .budget-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: var(--spacing--8) var(--spacing--16);
+  border: 1px solid var(--_🎨-color--base---neutral--dark-16);
   border-radius: var(--_🔘-radius---general--full);
+  background-color: var(--_🎨-color--tokens---input-default--background);
+  cursor: pointer;
+  flex: 1 1 auto;
 }
-.popup-contact .form-price-wrap .radio-text {
-  font-weight: 400;
+.popup-contact .form-price-wrap .budget-pill input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+.popup-contact .form-price-wrap .budget-pill span {
+  position: relative;
+  z-index: 1;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  color: var(--_🎨-color--tokens---text-body--strong);
+}
+.popup-contact .form-price-wrap .budget-pill:has(input:checked) {
+  border-color: var(--_🎨-color--base---accent--primary);
+  background-color: color-mix(in srgb, var(--_🎨-color--base---accent--primary) 14%, #fff);
 }
 .footer-bottom-tile {
   flex-wrap: wrap;
@@ -394,19 +385,11 @@
 .popup-contact .form-price-wrap {
   gap: var(--spacing--8);
 }
-.popup-contact .form-price-wrap .radio-button-field {
-  flex: 1 1 auto;
-}
-.popup-contact .form-price-wrap .radio-text {
-  font-size: 0.8125rem;
-  line-height: 1.35;
-  white-space: nowrap;
-}
 @media screen and (max-width: 479px) {
-  .popup-contact .form-price-wrap .radio-button-field {
+  .popup-contact .form-price-wrap .budget-pill {
     flex: 1 1 calc(50% - 4px);
   }
-  .popup-contact .form-price-wrap .radio-text {
+  .popup-contact .form-price-wrap .budget-pill span {
     white-space: normal;
     text-align: center;
   }
@@ -567,20 +550,15 @@
               </div>
               <div class="input-wrap">
                 <div class="label-large form-budget-label">예상 예산 · 패키지</div>
-                <div class="form-price-wrap"><label class="radio-button-field w-radio">
-                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button w-radio-input"></div><input type="radio" name="selected-package" id="budget-studio" data-name="selected-package" style="opacity:0;position:absolute;z-index:-1" value="Studio · 약 98만원"><span class="radio-text w-form-label" for="budget-studio">Studio · 98만</span>
-                  </label><label class="radio-button-field w-radio">
-                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button w-radio-input"></div><input type="radio" name="selected-package" id="budget-focus" data-name="selected-package" style="opacity:0;position:absolute;z-index:-1" value="Focus · 약 158만원"><span class="radio-text w-form-label" for="budget-focus">Focus · 158만</span>
-                  </label><label class="radio-button-field w-radio">
-                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button w-radio-input"></div><input type="radio" name="selected-package" id="budget-residence" data-name="selected-package" style="opacity:0;position:absolute;z-index:-1" value="Residence · 약 268만원"><span class="radio-text w-form-label" for="budget-residence">Residence · 268만</span>
-                  </label><label class="radio-button-field w-radio">
-                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button w-radio-input"></div><input type="radio" name="selected-package" id="budget-signature" data-name="selected-package" style="opacity:0;position:absolute;z-index:-1" value="Signature · 약 420만원"><span class="radio-text w-form-label" for="budget-signature">Signature · 420만+</span>
-                  </label><label class="radio-button-field w-radio">
-                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button w-radio-input"></div><input type="radio" name="selected-package" id="budget-undecided" data-name="selected-package" style="opacity:0;position:absolute;z-index:-1" value="미정 · 상담 후 안내"><span class="radio-text w-form-label" for="budget-undecided">미정</span>
-                  </label></div>
+                <div class="form-price-wrap">
+                  <label class="budget-pill" for="budget-studio"><input type="radio" name="selected-package" id="budget-studio" value="Studio · 약 98만원"><span>Studio · 98만</span></label>
+                  <label class="budget-pill" for="budget-focus"><input type="radio" name="selected-package" id="budget-focus" value="Focus · 약 158만원"><span>Focus · 158만</span></label>
+                  <label class="budget-pill" for="budget-residence"><input type="radio" name="selected-package" id="budget-residence" value="Residence · 약 268만원"><span>Residence · 268만</span></label>
+                  <label class="budget-pill" for="budget-signature"><input type="radio" name="selected-package" id="budget-signature" value="Signature · 약 420만원"><span>Signature · 420만+</span></label>
+                  <label class="budget-pill" for="budget-undecided"><input type="radio" name="selected-package" id="budget-undecided" value="미정 · 상담 후 안내"><span>미정</span></label>
+                </div>
               </div>
             </div>
-            <p class="form-legal-note text-small body-medium">문의를 전송하면 <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">개인정보 처리방침</a>에 동의한 것으로 간주합니다.</p>
             <div class="contact-submit-wrap">
               <button type="submit" class="contact-submit-btn" data-wait="전송 중...">문의 보내기</button>
             </div>
