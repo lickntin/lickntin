@@ -90,7 +90,7 @@
     }
 
     if (result.error) {
-      console.error('Inquiry insert failed:', result.error);
+      console.error('Inquiry insert failed:', result.error.message, result.error);
       show(fail, true);
       return;
     }

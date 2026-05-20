@@ -18,6 +18,14 @@
 
 성공 후 **Table Editor**에 `inquiries`, `admin_users` 두 테이블이 보이면 OK.
 
+### 폼 제출이 계속 실패할 때 (`접수 중 문제가 발생했습니다`)
+
+이미 `001`을 실행했는데 문의 폼만 실패하면, **아래 파일만** SQL Editor에서 Run:
+
+`supabase/migrations/004_fix_form_insert.sql`
+
+(anon INSERT 권한 + RLS 정책을 다시 맞춥니다. `001` 전체를 다시 실행할 필요 없습니다.)
+
 ## 3. 관리자 계정 만들기
 
 1. **Authentication → Users**에서 사용자가 이미 있으면 그대로 사용  

@@ -32,6 +32,10 @@ create table if not exists public.admin_users (
 alter table public.inquiries enable row level security;
 alter table public.admin_users enable row level security;
 
+grant usage on schema public to anon, authenticated;
+grant insert on table public.inquiries to anon;
+grant select, update on table public.inquiries to authenticated;
+
 -- 정책 재실행 시 오류 방지 (이미 있으면 삭제 후 생성)
 drop policy if exists "anon_insert_inquiries" on public.inquiries;
 drop policy if exists "admin_select_inquiries" on public.inquiries;
@@ -49,7 +53,7 @@ create policy "anon_insert_inquiries"
     and char_length(regexp_replace(trim(phone), '[^0-9]', '', 'g')) >= 9
     and char_length(trim(project_type)) between 1 and 200
     and privacy_agreed is true
-    and status = 'new'
+    and coalesce(status, 'new') = 'new'
   );
 
 -- 등록된 관리자: 문의 조회
