@@ -1,4 +1,5 @@
 [build]
+  command = "node scripts/write-config.js"
   publish = "."
 
 [[headers]]

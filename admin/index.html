@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>릭엔틴 관리자 | 문의 접수</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="admin.css" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-wrap">
+    <div id="login-view" class="admin-card">
+      <h1>릭엔틴 관리자 로그인</h1>
+      <p style="color:#6b7280;font-size:0.9rem;margin-bottom:1.25rem;">Supabase에 등록된 관리자 계정만 접속할 수 있습니다.</p>
+      <form id="login-form" class="admin-form">
+        <label for="admin-login-email">이메일</label>
+        <input type="email" id="admin-login-email" required autocomplete="username">
+        <label for="admin-login-password">비밀번호</label>
+        <input type="password" id="admin-login-password" required autocomplete="current-password">
+        <button type="submit" class="admin-btn">로그인</button>
+      </form>
+      <p id="login-error" class="admin-error"></p>
+      <p style="margin-top:1.5rem;font-size:0.85rem;"><a href="../index.html">← 홈페이지로</a></p>
+    </div>
+
+    <div id="dashboard-view" class="hidden">
+      <div class="admin-header">
+        <div>
+          <h1>문의 접수 관리</h1>
+          <p style="margin:0.25rem 0 0;color:#6b7280;font-size:0.9rem;" id="admin-email"></p>
+        </div>
+        <div>
+          <button type="button" class="admin-btn secondary" id="refresh-btn">새로고침</button>
+          <button type="button" class="admin-btn secondary" id="logout-btn">로그아웃</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-toolbar">
+          <label for="filter-status">상태 필터</label>
+          <select id="filter-status">
+            <option value="">전체</option>
+            <option value="new">신규</option>
+            <option value="read">확인</option>
+            <option value="replied">답변완료</option>
+            <option value="archived">보관</option>
+          </select>
+        </div>
+        <table class="inquiry-table">
+          <thead>
+            <tr>
+              <th>접수일</th>
+              <th>이름</th>
+              <th>이메일</th>
+              <th>유형</th>
+              <th>상태</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="inquiry-tbody"></tbody>
+        </table>
+        <div id="detail-panel" class="detail-panel"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
