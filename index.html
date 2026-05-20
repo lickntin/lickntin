@@ -280,37 +280,43 @@
   text-align: center;
   color: var(--_🎨-color--tokens---text-body--medium);
 }
-.privacy-consent-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--spacing--8);
+.form-block-contact .form-legal-note {
+  margin: 0;
+  color: var(--_🎨-color--tokens---text-body--medium);
+  line-height: 1.5;
 }
-.form-block-contact .privacy-consent-row.w-checkbox {
-  padding-left: 0 !important;
-  display: flex !important;
-  align-items: flex-start;
-  gap: var(--spacing--8);
+.form-block-contact .form-legal-note a {
+  color: var(--_🎨-color--base---accent--primary);
+  text-decoration: underline;
 }
-.form-block-contact .privacy-consent-row .w-checkbox-input {
-  float: none !important;
-  margin: 0 !important;
-  position: static !important;
+.form-block-contact .contact-submit-wrap {
+  width: 100%;
 }
-.form-block-contact .privacy-consent-row .checkbox-contact {
-  border-radius: 4px !important;
-  flex: none;
+.form-block-contact .contact-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 10rem;
+  padding: 0.875rem 1.75rem;
+  border: none;
+  border-radius: var(--_🔘-radius---general--small);
+  background-color: var(--_🎨-color--base---accent--primary);
+  color: var(--_🎨-color--base---neutral--light-100);
+  font-family: var(--_🔠-typography---font-family--body-2);
+  font-size: var(--_🔠-typography---size--body-2);
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--_🎨-color--base---accent--primary) 35%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
-.form-block-contact .privacy-consent-row .checkbox-contact.w--redirected-checked {
-  background-color: var(--_🎨-color--tokens---input-default--background);
-  background-image: url('images/icon-check.svg') !important;
-  background-position: 50% !important;
-  background-repeat: no-repeat !important;
-  background-size: 12px 12px !important;
-  border-color: var(--_🎨-color--tokens---input-default--border);
+.form-block-contact .contact-submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--_🎨-color--base---accent--primary) 42%, transparent);
 }
-.form-block-contact .privacy-consent-row .w-checkbox-input--inputType-custom.w--redirected-checked {
-  background-image: none !important;
+.form-block-contact .contact-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
 }
 .popup-contact .form-price-wrap .radio-button-field.w-radio {
   padding-left: 0 !important;
@@ -327,67 +333,23 @@
   box-shadow: none !important;
 }
 .popup-contact .form-price-wrap .radio-button-field .w-radio-input.w-form-formradioinput--inputType-custom {
-  border-radius: var(--_🔘-radius---general--small) !important;
+  border-radius: var(--_🔘-radius---general--full) !important;
 }
 .popup-contact .form-price-wrap .radio-button-field .w-radio-input.w--redirected-checked {
   border-width: 1px !important;
   border-color: var(--_🎨-color--base---neutral--dark-32) !important;
+  background-color: color-mix(in srgb, var(--_🎨-color--base---accent--primary) 12%, #fff) !important;
+  box-shadow: none !important;
 }
-.privacy-consent-row .checkbox-text {
-  display: inline;
+.popup-contact .form-price-wrap .radio-button-field .w-radio-input::before,
+.popup-contact .form-price-wrap .radio-button-field .w-radio-input::after {
+  display: none !important;
 }
-.privacy-view-btn {
-  border: none;
-  background: none;
-  padding: 0;
-  margin: 0 0 0 0.35em;
-  font: inherit;
-  color: var(--_🎨-color--base---accent--primary);
-  text-decoration: underline;
-  cursor: pointer;
+.popup-contact .form-price-wrap .radio-button-field {
+  border-radius: var(--_🔘-radius---general--full);
 }
-.privacy-required {
-  margin-left: 0.25em;
-  color: var(--_🎨-color--tokens---text-body--medium);
-}
-.form-block-contact .privacy-inline-panel {
-  display: none;
-  width: 100%;
-  max-height: 220px;
-  margin-top: var(--spacing--12);
-  padding: var(--spacing--16);
-  border: 1px solid var(--_🎨-color--base---neutral--dark-16);
-  border-radius: var(--_🔘-radius---general--small);
-  background-color: #ffffff;
-  color: var(--_🎨-color--base---neutral--dark-88);
-  overflow-y: auto;
-  position: relative;
-  z-index: 2;
-}
-.form-block-contact .privacy-inline-panel.is-open {
-  display: block;
-}
-.form-block-contact .privacy-inline-panel,
-.form-block-contact .privacy-inline-panel p,
-.form-block-contact .privacy-inline-panel strong {
-  font-family: var(--_🔠-typography---font-family--body-3);
-  font-size: var(--_🔠-typography---size--body-3);
-  line-height: 1.6;
-  color: var(--_🎨-color--base---neutral--dark-88);
-}
-.form-block-contact .privacy-inline-panel strong {
-  font-weight: var(--_🔠-typography---weight--body-bold);
-  color: var(--_🎨-color--base---neutral--dark-100);
-}
-.form-block-contact .privacy-inline-panel a {
-  color: var(--_🎨-color--base---accent--primary);
-  text-decoration: underline;
-}
-.form-block-contact .privacy-inline-panel p {
-  margin: 0 0 var(--spacing--12);
-}
-.form-block-contact .privacy-inline-panel p:last-child {
-  margin-bottom: 0;
+.popup-contact .form-price-wrap .radio-text {
+  font-weight: 400;
 }
 .footer-bottom-tile {
   flex-wrap: wrap;
@@ -554,16 +516,16 @@
                   <div class="label-large">이름</div><input class="text-field w-input" maxlength="256" name="contact-name" data-name="Name" placeholder="홍길동" type="text" id="contact-name" required="">
                 </div>
                 <div class="input-wrap">
-                  <div class="label-large">휴대폰 번호</div><input class="text-field w-input" maxlength="20" name="contact-phone" data-name="Phone" placeholder="010-0000-0000" type="tel" id="contact-phone" inputmode="tel" autocomplete="tel" required="">
+                  <div class="label-large">이메일</div><input class="text-field w-input" maxlength="256" name="contact-email" data-name="Email" placeholder="example@email.com" type="email" id="contact-email" required="">
                 </div>
               </div>
               <div class="input-wrap">
-                <div class="label-large">이메일</div><input class="text-field w-input" maxlength="256" name="contact-email" data-name="Email" placeholder="example@email.com" type="email" id="contact-email" required="">
+                <div class="label-large">휴대폰</div><input class="text-field w-input" maxlength="20" name="contact-phone" data-name="Phone" placeholder="010-0000-0000" type="tel" id="contact-phone" inputmode="tel" autocomplete="tel" required="">
               </div>
               <div id="w-node-d8152ea2-43c9-1948-a2fa-f6dbf789638e-f789637d" class="input-wrap">
                 <div class="label-large">프로젝트 유형</div>
                 <div class="input-relative"><select id="project-type" name="project-type" data-name="project-type" required="" class="text-field select w-select">
-                    <option value="">유형을 선택해 주세요</option>
+                    <option value="">프로젝트 유형을 선택해 주세요</option>
                     <option value="3D 시각화·포토리얼 렌더">3D 시각화·포토리얼 렌더</option>
                     <option value="무드보드·스타일링 컨셉">무드보드·스타일링 컨셉</option>
                     <option value="CAD 도면 (평·천·입·전·상세)">CAD 도면 (평·천·입·전·상세)</option>
@@ -580,7 +542,7 @@
                 </div>
               </div>
               <div class="input-wrap">
-                <div class="label-large">문의 내용</div><textarea id="project-message" name="project-message" maxlength="5000" data-name="project-message" placeholder="공간 유형(원룸·아파트·카페 등), 평수, 원하는 분위기, 참고 이미지, 희망 일정을 알려주세요." class="text-field textarea w-input"></textarea>
+                <div class="label-large">문의 내용</div><textarea id="project-message" name="project-message" maxlength="5000" data-name="project-message" placeholder="공간 유형, 평수, 원하는 분위기, 참고 이미지, 희망 일정을 알려주세요." class="text-field textarea w-input"></textarea>
               </div>
               <div class="input-wrap">
                 <div class="label-large form-budget-label">예상 예산 · 패키지</div>
@@ -597,26 +559,9 @@
                   </label></div>
               </div>
             </div>
-            <div class="privacy-consent-block">
-              <label class="w-checkbox checkbox privacy-consent-row">
-                <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox-contact"></div><input type="checkbox" name="I-agree-to-Privacy-Policy" id="I-agree-to-Privacy-Policy" data-name="I agree to Privacy Policy" required="" style="opacity:0;position:absolute;z-index:-1"><span class="checkbox-text w-form-label" for="I-agree-to-Privacy-Policy">개인정보 수집 및 이용에 동의합니다. <button type="button" class="privacy-view-btn" id="privacy-view-btn" aria-expanded="false" aria-controls="privacy-inline-panel">[내용보기]</button> <span class="privacy-required">(필수)</span></span>
-              </label>
-              <div id="privacy-inline-panel" class="privacy-inline-panel text-small body-medium" role="region" aria-label="개인정보 수집 및 이용 안내">
-                <p><strong>1. 수집 항목</strong> 이름, 이메일, 휴대폰 번호, 프로젝트 유형·예산·문의 내용, 첨부 자료(선택)</p>
-                <p><strong>2. 수집·이용 목적</strong> 상담 접수, 견적·일정 안내, 디자인 제작 서비스 제공, 고객 문의 응대</p>
-                <p><strong>3. 보유·이용 기간</strong> 상담·거래 종료 후 3년, 관련 법령에 따른 보존 기간이 있는 경우 해당 기간</p>
-                <p><strong>4. 제공 거부 권리</strong> 동의를 거부할 수 있으나, 거부 시 상담·문의 접수가 제한될 수 있습니다.</p>
-                <p><strong>5. 개인정보 보호책임자</strong> 박동현 · 010-7632-1683 · dhp168342@naver.com</p>
-                <p>전체 내용은 <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">개인정보 처리방침</a>에서 확인하실 수 있습니다.</p>
-              </div>
-            </div>
-            <div class="submit-wrap"><input type="submit" data-wait="전송 중..." class="submit-absolute w-button" value="문의 남기기">
-              <a href="#" data-wf--cta-primary--variant="primary" data-w-id="b6cb0c38-8163-7dea-a713-38c4c14f0013" class="cta-main w-inline-block">
-                <div class="button-text-mask">
-                  <div button-text="" class="button-text">상담 문의</div>
-                </div>
-                <div button-bg="" class="button-bg"></div>
-              </a>
+            <p class="form-legal-note text-small body-medium">문의를 전송하면 <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">개인정보 처리방침</a>에 동의한 것으로 간주합니다.</p>
+            <div class="contact-submit-wrap">
+              <button type="submit" class="contact-submit-btn" data-wait="전송 중...">문의 보내기</button>
             </div>
           </div>
         </form>
@@ -1873,18 +1818,6 @@ $("[data-lenis-toggle]").on("click", function () {
   window.addEventListener("resize", function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(startHeroMarquee, 200);
-  });
-})();
-
-(function () {
-  var btn = document.getElementById("privacy-view-btn");
-  var panel = document.getElementById("privacy-inline-panel");
-  if (!btn || !panel) return;
-  btn.addEventListener("click", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var open = panel.classList.toggle("is-open");
-    btn.setAttribute("aria-expanded", open ? "true" : "false");
   });
 })();
 
