@@ -7,16 +7,9 @@
 1. GitHub에서 **`supabase/setup.sql`** 내용 복사
 2. Supabase **SQL Editor** → **New query** → 붙여넣기 → **Run** (파일은 이것만)
 3. **Authentication**에 관리자 이메일 계정 생성
-4. SQL Editor **새 쿼리**에서 관리자 연결:
+4. SQL Editor **새 쿼리** → **`supabase/admin_register.sql`** Run (대시보드 조회용)
 
-```sql
-insert into public.admin_users (user_id, email)
-select id, email from auth.users
-where email = 'dhp168342@naver.com'
-on conflict (user_id) do nothing;
-```
-
-Table Editor에 `inquiries`, `admin_users`가 보이면 OK.
+문의가 안 보이면 1번·4번을 다시 실행하세요.
 
 ## Netlify
 

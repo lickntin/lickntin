@@ -78,15 +78,20 @@ create policy "admin_update_inquiries"
     exists (select 1 from public.admin_users au where au.user_id = auth.uid())
   );
 
-create policy "admin_users_no_api"
+drop policy if exists "admin_users_no_api" on public.admin_users;
+drop policy if exists "admin_read_self" on public.admin_users;
+
+create policy "admin_users_block_anon"
   on public.admin_users
   for all
-  to anon, authenticated
+  to anon
   using (false)
   with check (false);
 
--- 관리자 연결 (Authentication에 계정 만든 뒤, 이메일만 본인 것으로 수정)
--- insert into public.admin_users (user_id, email)
--- select id, email from auth.users
--- where email = 'dhp168342@naver.com'
--- on conflict (user_id) do nothing;
+create policy "admin_read_self"
+  on public.admin_users
+  for select
+  to authenticated
+  using (user_id = auth.uid());
+
+grant select on table public.admin_users to authenticated;

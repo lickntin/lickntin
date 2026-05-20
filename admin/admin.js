@@ -10,6 +10,7 @@
   var tableBody = document.getElementById('inquiry-tbody');
   var detailPanel = document.getElementById('detail-panel');
   var adminEmail = document.getElementById('admin-email');
+  var adminNotice = document.getElementById('admin-notice');
 
   var client = null;
   var rows = [];
@@ -31,6 +32,18 @@
 
   function hide(el) {
     if (el) el.classList.add('hidden');
+  }
+
+  function setNotice(msg, isError) {
+    if (!adminNotice) return;
+    if (!msg) {
+      hide(adminNotice);
+      adminNotice.textContent = '';
+      return;
+    }
+    show(adminNotice);
+    adminNotice.textContent = msg;
+    adminNotice.classList.toggle('is-error', !!isError);
   }
 
   function statusBadge(status) {
@@ -152,9 +165,31 @@
     });
   }
 
+  async function isAdminRegistered(sb) {
+    var res = await sb.from('admin_users').select('user_id').maybeSingle();
+    if (res.error) {
+      console.warn('admin_users check:', res.error.message);
+      return null;
+    }
+    return !!res.data;
+  }
+
   async function loadInquiries() {
     var sb = getClient();
     if (!sb) return;
+
+    setNotice('', false);
+
+    var registered = await isAdminRegistered(sb);
+    if (registered === false) {
+      setNotice(
+        '관리자 권한이 등록되지 않았습니다. Supabase SQL Editor에서 supabase/admin_register.sql 을 실행한 뒤 새로고침하세요.',
+        true
+      );
+      tableBody.innerHTML = '<tr><td colspan="7">관리자 권한 없음 — SQL 등록 필요</td></tr>';
+      return;
+    }
+
     var q = sb.from('inquiries').select('*').order('created_at', { ascending: false });
     if (filterStatus && filterStatus.value) {
       q = q.eq('status', filterStatus.value);
@@ -163,10 +198,17 @@
     if (res.error) {
       tableBody.innerHTML =
         '<tr><td colspan="7">불러오기 실패: ' + escapeHtml(res.error.message) + '</td></tr>';
+      setNotice('문의 목록을 불러오지 못했습니다. ' + res.error.message, true);
       return;
     }
     rows = res.data || [];
     renderTable(rows);
+    if (!rows.length && registered) {
+      setNotice(
+        '접수된 문의가 없습니다. 홈페이지 폼 제출이 실패하면 Supabase에서 supabase/setup.sql 을 다시 실행하세요.',
+        true
+      );
+    }
   }
 
   async function checkSession() {
@@ -188,6 +230,7 @@
     } else {
       show(loginView);
       hide(dashView);
+      setNotice('', false);
     }
   }
 
